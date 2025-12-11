@@ -113,6 +113,347 @@ const confirmationModal = document.getElementById('confirmationModal');
 const today = new Date().toISOString().split('T')[0];
 document.getElementById('date').min = today;
 
+// Service booking functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize service links functionality
+    initializeServiceLinks();
+    
+    // Update booking form with all services
+    updateBookingFormOptions();
+});
+
+// Function to initialize service links
+function initializeServiceLinks() {
+    const serviceSelect = document.getElementById('service');
+    const serviceLinks = document.querySelectorAll('.service-link');
+    
+    // Add click event to all service links
+    serviceLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const serviceValue = this.getAttribute('data-service');
+            console.log('Service clicked:', serviceValue);
+            
+            // Try to find exact match first
+            let found = false;
+            for (let i = 0; i < serviceSelect.options.length; i++) {
+                const option = serviceSelect.options[i];
+                
+                // Remove price for comparison
+                const clickedServiceWithoutPrice = serviceValue.split(' - ₹')[0];
+                const optionServiceWithoutPrice = option.text.split(' - ₹')[0];
+                
+                // Exact match (case insensitive)
+                if (optionServiceWithoutPrice.toLowerCase() === clickedServiceWithoutPrice.toLowerCase()) {
+                    serviceSelect.value = option.value;
+                    found = true;
+                    console.log('Exact match found:', option.value);
+                    break;
+                }
+            }
+            
+            // If exact match not found, try partial match
+            if (!found) {
+                const clickedServiceName = serviceValue.split(' - ')[0];
+                for (let i = 0; i < serviceSelect.options.length; i++) {
+                    const option = serviceSelect.options[i];
+                    const optionText = option.text.toLowerCase();
+                    const clickedText = clickedServiceName.toLowerCase();
+                    
+                    if (optionText.includes(clickedText) || clickedText.includes(optionText.split(' - ')[0])) {
+                        serviceSelect.value = option.value;
+                        found = true;
+                        console.log('Partial match found:', option.value);
+                        break;
+                    }
+                }
+            }
+            
+            if (found) {
+                // Scroll to booking section
+                document.getElementById('booking').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Highlight the selected option in the form
+                highlightService(serviceSelect);
+                
+                // Show notification
+                showServiceSelectedNotification(serviceValue);
+                
+                // Focus on the service select
+                setTimeout(() => {
+                    serviceSelect.focus();
+                }, 500);
+            } else {
+                console.log('Service not found in dropdown:', serviceValue);
+                // Fallback: set the service manually and show message
+                const tempOption = document.createElement('option');
+                tempOption.value = serviceValue;
+                tempOption.textContent = serviceValue;
+                serviceSelect.appendChild(tempOption);
+                serviceSelect.value = serviceValue;
+                
+                // Scroll to booking section
+                document.getElementById('booking').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Highlight the selected option in the form
+                highlightService(serviceSelect);
+                
+                // Show notification
+                showServiceSelectedNotification(serviceValue);
+            }
+        });
+    });
+}
+
+// Function to update booking form with all services
+function updateBookingFormOptions() {
+    const serviceSelect = document.getElementById('service');
+    
+    // Clear existing options except the first one
+    while (serviceSelect.options.length > 1) {
+        serviceSelect.remove(1);
+    }
+    
+    // Define all services with their categories
+    const allServices = {
+        "Hair Cutting & Styling": [
+            "U-Cut - ₹180",
+            "V-Cut - ₹180",
+            "Layer Cut - ₹350",
+            "Step Cut - ₹350",
+            "Feather Cut - ₹450",
+            "One-Length Cut - ₹150",
+            "Fringes / Front Cut - ₹100",
+            "Kids Haircut - ₹180",
+            "Blow Dry - ₹100",
+            "Straight Finish - ₹1000",
+            "Curls / Waves - ₹1200"
+        ],
+        "Hair Wash & Care": [
+            "Basic Hair Wash - ₹150",
+            "Deep Conditioning - ₹200",
+            "Anti-Dandruff Wash - ₹350",
+            "Clarifying Wash - ₹180",
+            "Scalp Massage - ₹500"
+        ],
+        "Hair Spa & Treatments": [
+            "Hydration Spa - ₹700",
+            "Smoothening Spa - ₹890",
+            "Anti-Dandruff Spa - ₹790",
+            "Anti-Hairfall Spa - ₹699",
+            "Protein Spa - ₹1200",
+            "Keratin Spa - ₹3500",
+            "Hair Botox Treatment - ₹3599",
+            "Olaplex Treatment - ₹1599"
+        ],
+        "Korean Spa": [
+            "Korean Spa - Basic - ₹1499",
+            "Korean Spa - Premium - ₹2499"
+        ],
+        "Hair Colouring": [
+            "Root Touch-Up - ₹600",
+            "Global Hair Colour - ₹1500-2500",
+            "Highlights - ₹350/strip",
+            "Balayage - ₹3599"
+        ],
+        "Chemical Services": [
+            "Permanent Straightening - ₹5000",
+            "Smoothening - ₹5000",
+            "Keratin Treatment - ₹3500",
+            "Rebonding - ₹6000",
+            "Perming - ₹3000"
+        ],
+        "Facials & Clean-Ups": [
+            "Clean-Ups - ₹350",
+            "Basic Clean-Up - ₹250",
+            "De-Tan Clean-Up - ₹500",
+            "Fruit Facial - ₹599",
+            "Gold Facial - ₹799",
+            "Diamond Facial - ₹999",
+            "Pearl Facial - ₹1199",
+            "Anti-Acne Facial - ₹1299-1599",
+            "Anti-Ageing Facial - ₹1499",
+            "Hydra Facial - ₹1499-2499",
+            "Brightening Facial - ₹1299",
+            "Vitamin-C Facial - ₹1000-3000",
+            "Luxury Facial - ₹4999"
+        ],
+        "Bleach": [
+            "Face Bleach - ₹200",
+            "Neck Bleach - ₹100",
+            "Full Hand - ₹250",
+            "Full Leg - ₹450",
+            "De-Tan Bleach - ₹150"
+        ],
+        "Threading": [
+            "Eyebrows - ₹30",
+            "Upper Lip - ₹10",
+            "Chin - ₹10",
+            "Forehead - ₹10",
+            "Full Face - ₹100"
+        ],
+        "Waxing": [
+            "Underarms - ₹100",
+            "Half Arms - ₹400",
+            "Full Arms - ₹600",
+            "Half Legs - ₹700",
+            "Full Legs - ₹1000",
+            "Full Body - ₹5000",
+            "Rica Wax Underarms - ₹150",
+            "Rica Wax Full Arms - ₹500",
+            "Rica Wax Full Legs - ₹700",
+            "Rica Wax Full Body - ₹7000"
+        ],
+        "Manicure & Pedicure": [
+            "Basic Manicure - ₹400",
+            "Basic Pedicure - ₹799",
+            "Spa Manicure - ₹600",
+            "Spa Pedicure - ₹1000"
+        ],
+        "Makeup": [
+            "Party Makeup - ₹1500",
+            "Engagement Makeup - ₹5000",
+            "Bridal Makeup - ₹9999",
+            "Airbrush Makeup - ₹12000",
+            "Hairstyling - ₹1000",
+            "Saree Draping - ₹300"
+        ],
+        "Body Massage": [
+            "Head Massage - ₹500",
+            "Neck & Shoulder Massage - ₹400",
+            "Foot Massage - ₹500",
+            "Full Body Massage - ₹2000"
+        ],
+        "Bridal Packages": [
+            "Pre-Bridal Advanced - ₹2500-3500",
+            "Full Bridal Package - ₹50000"
+        ]
+    };
+    
+    // Populate the select with all services
+    Object.keys(allServices).forEach(category => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = category;
+        
+        allServices[category].forEach(service => {
+            const option = document.createElement('option');
+            option.value = service;
+            option.textContent = service;
+            optgroup.appendChild(option);
+        });
+        
+        serviceSelect.appendChild(optgroup);
+    });
+    
+    console.log('Booking form updated with', Object.keys(allServices).length, 'categories');
+}
+
+// Highlight the service select when a service is chosen
+function highlightService(selectElement) {
+    selectElement.classList.remove('service-highlight');
+    void selectElement.offsetWidth; // Trigger reflow
+    selectElement.classList.add('service-highlight');
+    
+    // Remove highlight class after animation
+    setTimeout(() => {
+        selectElement.classList.remove('service-highlight');
+    }, 2000);
+}
+
+// Show notification when service is selected
+function showServiceSelectedNotification(serviceName) {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.service-notification');
+    existingNotifications.forEach(n => n.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'service-notification';
+    
+    const notificationHTML = `
+        <div class="notification-content">
+            <i class="fas fa-check-circle" style="color: white; font-size: 1.2rem;"></i>
+            <span style="color: white; font-weight: bold;">"${serviceName}" selected for booking!</span>
+        </div>
+    `;
+    
+    notification.innerHTML = notificationHTML;
+    
+    // Add styles to notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+        color: white;
+        padding: 15px 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-hover);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease forwards;
+        max-width: 350px;
+        border-left: 4px solid var(--gold-color);
+    `;
+    
+    const content = notification.querySelector('.notification-content');
+    content.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    `;
+    
+    // Add CSS for notification animation if not already added
+    if (!document.getElementById('notification-animation-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-animation-styles';
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds with fade out animation
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease forwards';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Booking form submission
 bookingForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -132,6 +473,12 @@ bookingForm.addEventListener('submit', async function(e) {
             timeStyle: 'medium'
         })
     };
+    
+    // Validate form
+    if (!bookingData.service || bookingData.service === 'Select a Service') {
+        alert('Please select a service from the list');
+        return;
+    }
     
     try {
         // Show loading state
@@ -286,4 +633,5 @@ document.querySelector('.newsletter-form').addEventListener('submit', function(e
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Celavie Beauty website loaded successfully!');
     console.log('Booking system ready - submissions will go to: celaviespa@gmail.com');
+    console.log('Service linking functionality activated');
 });
