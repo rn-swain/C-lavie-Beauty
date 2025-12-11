@@ -944,3 +944,175 @@ footer {
         margin-right: 10px;
     }
 }
+/* Add these styles to your CSS file */
+
+.service-list {
+    list-style: none;
+    margin-top: 10px;
+    padding-left: 0;
+    font-size: 0.9rem;
+}
+
+.service-list li {
+    margin-bottom: 5px;
+    padding-left: 0;
+    position: relative;
+    line-height: 1.4;
+}
+
+.service-list li:before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: 0;
+}
+
+.nested-list {
+    list-style: none;
+    margin-left: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 0;
+    font-size: 0.85rem;
+}
+
+.nested-list li:before {
+    content: "○";
+    color: var(--secondary-color);
+}
+
+.service-content h3 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.service-card .service-content {
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.service-card .service-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.service-card .service-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.service-card .service-content::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+.service-card .service-content::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Adjust grid for better layout */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    .service-content h3 {
+        font-size: 1.1rem;
+        min-height: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* Service link styles */
+.service-link {
+    color: var(--dark-color);
+    text-decoration: none;
+    display: block;
+    padding: 2px 0;
+    transition: var(--transition);
+    position: relative;
+    cursor: pointer;
+}
+
+.service-link:hover {
+    color: var(--accent-color);
+    transform: translateX(5px);
+}
+
+.service-link:hover:before {
+    color: var(--accent-color);
+}
+
+.service-list li:before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: 0;
+    transition: var(--transition);
+}
+
+.service-category {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px 0;
+    color: var(--secondary-color);
+}
+
+/* Remove bullet for category titles */
+.service-list li .service-category:before {
+    content: "";
+    display: none;
+}
+
+.nested-list {
+    list-style: none;
+    margin-left: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 0;
+    font-size: 0.85rem;
+}
+
+.nested-list li:before {
+    content: "○";
+    color: var(--secondary-color);
+}
+
+/* Booking form highlight */
+.service-highlight {
+    animation: highlightService 2s ease;
+    position: relative;
+}
+
+@keyframes highlightService {
+    0% {
+        background-color: transparent;
+    }
+    20% {
+        background-color: rgba(200, 162, 200, 0.2);
+        box-shadow: 0 0 0 2px var(--accent-color);
+    }
+    100% {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
