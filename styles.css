@@ -354,20 +354,18 @@ header {
 
 /* Valentine's Simple Special */
 .valentine-simple {
-    background: #fff5f7;
-    padding: 60px 0;
-    border-top: 1px solid #ffebee;
-    border-bottom: 1px solid #ffebee;
+   background: white;
+    padding: 40px 0;
 }
 
 .simple-card {
     max-width: 600px;
     margin: 0 auto;
-    background: white;
+    background: #fffafb;
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
-    border: 1px solid #ffebee;
+    
+    border: 1px solid #ff3366;
 }
 
 /* Header */
@@ -470,7 +468,7 @@ header {
     margin: 0;
     font-weight: 500;
     padding: 10px;
-    background: #f8f9fa;
+    background: white;
     border-radius: 10px;
     border: 1px solid #eee;
 }
@@ -480,7 +478,7 @@ header {
     text-align: center;
     margin: 25px 0;
     padding: 15px;
-    background: #f8f9fa;
+    background: white;
     border-radius: 10px;
     border: 1px solid #eee;
 }
@@ -585,7 +583,7 @@ header {
     gap: 12px;
     margin-bottom: 15px;
     padding: 12px;
-    background: #f8f9fa;
+    background: white;
     border-radius: 10px;
     border: 1px solid #eee;
 }
@@ -610,8 +608,9 @@ header {
     }
     
     .simple-card {
-        padding: 30px 20px;
-        margin: 0 10px;
+        padding: 35px 25px;
+        margin: 0;
+        width: 100%;
     }
     
     .simple-header h2 {
@@ -644,6 +643,7 @@ header {
     .contact-buttons {
         flex-direction: column;
         align-items: center;
+        
     }
     
     .call-btn, .whatsapp-btn {
@@ -654,6 +654,7 @@ header {
 }
 
 @media (max-width: 480px) {
+
     .simple-header h2 {
         font-size: 1.6rem;
     }
@@ -1440,4 +1441,5 @@ footer {
         box-shadow: none;
     }
 }
+
 
