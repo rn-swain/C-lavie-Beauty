@@ -351,6 +351,330 @@ header {
     }
 }
 
+
+/* Valentine's Simple Special */
+.valentine-simple {
+    background: #fff5f7;
+    padding: 60px 0;
+    border-top: 1px solid #ffebee;
+    border-bottom: 1px solid #ffebee;
+}
+
+.simple-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+    border: 1px solid #ffebee;
+}
+
+/* Header */
+.simple-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ffebee;
+}
+
+.simple-header h2 {
+    color: #ff3366;
+    font-size: 2.2rem;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+}
+
+.subheading {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Offer Section */
+.offer-section {
+    margin-bottom: 30px;
+}
+
+.offer-main {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.price-box {
+    background: #fff5f7;
+    border: 3px solid #ff3366;
+    border-radius: 15px;
+    padding: 20px;
+    min-width: 140px;
+    text-align: center;
+}
+
+.currency {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff3366;
+    opacity: 0.8;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ff3366;
+    line-height: 1;
+    margin: 0 5px;
+}
+
+.plus {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff3366;
+    opacity: 0.8;
+}
+
+.offer-details {
+    text-align: center;
+    flex: 1;
+    min-width: 250px;
+}
+
+.free-tag {
+    display: inline-block;
+    background: #ff3366;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    border: 2px solid #ff3366;
+}
+
+.offer-details h3 {
+    color: #333;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.offer-choice {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+/* Duration */
+.duration {
+    text-align: center;
+    margin: 25px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.duration-text {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.duration-text i {
+    color: #ff3366;
+    font-size: 1.1rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.book-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #ff3366;
+    color: white;
+    text-decoration: none;
+    padding: 16px 40px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.book-btn:hover {
+    background: #e6004c;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.call-btn, .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.call-btn {
+    background: #333;
+    color: white;
+    border: 1px solid #333;
+}
+
+.call-btn:hover {
+    background: #000;
+    color: white;
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: white;
+    border: 1px solid #25D366;
+}
+
+.whatsapp-btn:hover {
+    background: #128C7E;
+    color: white;
+}
+
+/* Details Section */
+.details-section {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.location, .validity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.location i, .validity i {
+    color: #ff3366;
+    font-size: 1.2rem;
+    min-width: 24px;
+}
+
+.location p, .validity p {
+    color: #555;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .valentine-simple {
+        padding: 40px 15px;
+    }
+    
+    .simple-card {
+        padding: 30px 20px;
+        margin: 0 10px;
+    }
+    
+    .simple-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .offer-main {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .price-box {
+        min-width: 120px;
+        padding: 15px;
+    }
+    
+    .price {
+        font-size: 2.5rem;
+    }
+    
+    .offer-details h3 {
+        font-size: 1.5rem;
+    }
+    
+    .book-btn {
+        padding: 14px 25px;
+        font-size: 1.1rem;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .call-btn, .whatsapp-btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .simple-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .price {
+        font-size: 2.2rem;
+    }
+    
+    .offer-details h3 {
+        font-size: 1.3rem;
+    }
+    
+    .duration-text {
+        font-size: 0.95rem;
+    }
+    
+    .location p, .validity p {
+        font-size: 0.95rem;
+    }
+}
+
 /* About Section */
 .about {
     background-color: white;
@@ -1116,3 +1440,4 @@ footer {
         box-shadow: none;
     }
 }
+
