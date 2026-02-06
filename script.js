@@ -635,3 +635,54 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Booking system ready - submissions will go to: celaviespa@gmail.com');
     console.log('Service linking functionality activated');
 });
+
+
+// ============================================
+// VALENTINE POPUP - SHOWS ON EVERY REFRESH
+// ============================================
+
+// Wait for everything to load
+window.addEventListener('load', function() {
+    // Get elements
+    const imagePopup = document.getElementById('imagePopup');
+    const imagePopupClose = document.getElementById('imagePopupClose');
+    
+    // If elements don't exist, exit
+    if (!imagePopup || !imagePopupClose) {
+        console.log('Popup elements not found');
+        return;
+    }
+    
+    console.log('Showing popup on refresh');
+    
+    // Show popup after 1.5 seconds delay - EVERY TIME
+    setTimeout(function() {
+        imagePopup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }, 1500);
+    
+    // Close button click
+    imagePopupClose.addEventListener('click', function() {
+        imagePopup.classList.remove('active');
+        document.body.style.overflow = '';
+        // No localStorage saving - will show again on refresh
+    });
+    
+    // Close when clicking outside image
+    imagePopup.addEventListener('click', function(e) {
+        if (e.target === imagePopup) {
+            imagePopup.classList.remove('active');
+            document.body.style.overflow = '';
+            // No localStorage saving - will show again on refresh
+        }
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imagePopup.classList.contains('active')) {
+            imagePopup.classList.remove('active');
+            document.body.style.overflow = '';
+            // No localStorage saving - will show again on refresh
+        }
+    });
+});
