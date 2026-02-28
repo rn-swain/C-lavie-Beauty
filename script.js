@@ -629,13 +629,11 @@ document.querySelector('.newsletter-form').addEventListener('submit', function(e
     }
 });
 
+
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Celavie Beauty website loaded successfully!');
     console.log('Booking system ready - submissions will go to: celaviespa@gmail.com');
     console.log('Service linking functionality activated');
 });
-
-    });
-});
-
