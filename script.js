@@ -750,7 +750,7 @@ window.addEventListener('load', function() {
         // Reset rotation timer
         if (rotationInterval) {
             clearInterval(rotationInterval);
-            rotationInterval = setInterval(nextAd, 1500);
+            rotationInterval = setInterval(nextAd, 2000);
         }
     }
     
@@ -760,7 +760,7 @@ window.addEventListener('load', function() {
         document.body.style.overflow = 'hidden';
         
         // Start auto-rotation every 4 seconds
-        rotationInterval = setInterval(nextAd, 1500);
+        rotationInterval = setInterval(nextAd, 2000);
         
     }, 1500);
     
@@ -816,7 +816,7 @@ window.addEventListener('load', function() {
     // Resume rotation on mouse leave
     popupImage.addEventListener('mouseleave', function() {
         if (imagePopup.classList.contains('active') && autoRotate) {
-            rotationInterval = setInterval(nextAd, 1500);
+            rotationInterval = setInterval(nextAd, 2000);
             console.log('Rotation resumed');
         }
     });
