@@ -637,3 +637,189 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Booking system ready - submissions will go to: celaviespa@gmail.com');
     console.log('Service linking functionality activated');
 });
+
+// ============================================
+// SMART POPUP - RANDOM START AD + AUTO-ROTATION
+// ============================================
+
+// Array of ad images - UPDATE THESE WITH YOUR ACTUAL FILENAMES
+const adImages = [
+    'ad1.jpeg',   // Your first ad
+    'ad2.jpeg',              // Your second ad
+    'ad3.jpeg'               // Your third ad
+];
+
+let currentAdIndex = 0;
+let rotationInterval = null;
+let autoRotate = true;
+
+// Wait for everything to load
+window.addEventListener('load', function() {
+    // Get elements
+    const imagePopup = document.getElementById('imagePopup');
+    const imagePopupClose = document.getElementById('imagePopupClose');
+    const popupImage = document.getElementById('popupImage');
+    const counterDots = document.querySelectorAll('.counter-dot');
+    
+    // If elements don't exist, exit
+    if (!imagePopup || !imagePopupClose || !popupImage) {
+        console.log('Popup elements not found');
+        return;
+    }
+    
+    // Track which ads user has seen across sessions
+    let seenAds = JSON.parse(localStorage.getItem('seenAds') || '[]');
+    
+    // If user has seen all ads, reset the tracking
+    if (seenAds.length >= adImages.length) {
+        seenAds = [];
+        console.log('Reset seen ads tracking');
+    }
+    
+    // Find unseen ads
+    const unseenAds = adImages.filter(ad => !seenAds.includes(ad));
+    
+    // Choose random ad from unseen ads (or all if none unseen)
+    let startAd;
+    if (unseenAds.length > 0) {
+        const randomUnseenIndex = Math.floor(Math.random() * unseenAds.length);
+        startAd = unseenAds[randomUnseenIndex];
+        // Mark this ad as seen
+        seenAds.push(startAd);
+        localStorage.setItem('seenAds', JSON.stringify(seenAds));
+        console.log('Starting with unseen ad:', startAd);
+    } else {
+        // Fallback - pick random from all ads
+        const randomIndex = Math.floor(Math.random() * adImages.length);
+        startAd = adImages[randomIndex];
+        console.log('Starting with random ad:', startAd);
+    }
+    
+    // Find the index of the starting ad
+    currentAdIndex = adImages.indexOf(startAd);
+    if (currentAdIndex === -1) currentAdIndex = 0;
+    
+    // Set initial image
+    popupImage.src = startAd;
+    
+    // Update counter dots
+    function updateCounterDots(index) {
+        counterDots.forEach((dot, i) => {
+            if (i === index) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+    updateCounterDots(currentAdIndex);
+    
+    // Function to change to next ad
+    function nextAd() {
+        if (!autoRotate) return;
+        
+        // Move to next ad (cycle through)
+        currentAdIndex = (currentAdIndex + 1) % adImages.length;
+        const nextAd = adImages[currentAdIndex];
+        
+        // Fade effect for smooth transition
+        popupImage.style.opacity = '0';
+        setTimeout(function() {
+            popupImage.src = nextAd;
+            popupImage.style.opacity = '1';
+            updateCounterDots(currentAdIndex);
+            console.log('Rotating to ad:', nextAd);
+        }, 150);
+    }
+    
+    // Function to go to specific ad
+    function goToAd(index) {
+        if (!autoRotate) return;
+        
+        currentAdIndex = index;
+        const newAd = adImages[currentAdIndex];
+        
+        popupImage.style.opacity = '0';
+        setTimeout(function() {
+            popupImage.src = newAd;
+            popupImage.style.opacity = '1';
+            updateCounterDots(currentAdIndex);
+            console.log('Jumping to ad:', newAd);
+        }, 150);
+        
+        // Reset rotation timer
+        if (rotationInterval) {
+            clearInterval(rotationInterval);
+            rotationInterval = setInterval(nextAd, 1000);
+        }
+    }
+    
+    // Show popup after 1.5 seconds
+    setTimeout(function() {
+        imagePopup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Start auto-rotation every 4 seconds
+        rotationInterval = setInterval(nextAd, 1000);
+        
+    }, 1500);
+    
+    // Close popup function (stops rotation)
+    function closePopup() {
+        autoRotate = false;
+        if (rotationInterval) {
+            clearInterval(rotationInterval);
+            rotationInterval = null;
+        }
+        imagePopup.classList.remove('active');
+        document.body.style.overflow = '';
+        console.log('Popup closed');
+    }
+    
+    // Close button click
+    imagePopupClose.addEventListener('click', closePopup);
+    
+    // Close when clicking outside image
+    imagePopup.addEventListener('click', function(e) {
+        if (e.target === imagePopup) {
+            closePopup();
+        }
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imagePopup.classList.contains('active')) {
+            closePopup();
+        }
+    });
+    
+    // Add click functionality to counter dots
+    if (counterDots.length > 0) {
+        counterDots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                if (imagePopup.classList.contains('active')) {
+                    goToAd(index);
+                }
+            });
+        });
+    }
+    
+    // Pause rotation on hover
+    popupImage.addEventListener('mouseenter', function() {
+        if (rotationInterval) {
+            clearInterval(rotationInterval);
+            rotationInterval = null;
+            console.log('Rotation paused');
+        }
+    });
+    
+    // Resume rotation on mouse leave
+    popupImage.addEventListener('mouseleave', function() {
+        if (imagePopup.classList.contains('active') && autoRotate) {
+            rotationInterval = setInterval(nextAd, 1000);
+            console.log('Rotation resumed');
+        }
+    });
+    
+    console.log('Popup initialized with', adImages.length, 'ads');
+});
